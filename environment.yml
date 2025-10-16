@@ -1,0 +1,13 @@
+name: movierecs
+channels: [conda-forge]
+dependencies:
+  - python=3.11
+  - pip
+  - pip:
+      - numpy
+      - pandas
+      - scipy
+      - scikit-learn
+      - fastapi
+      - uvicorn[standard]
+      - joblib
