@@ -215,7 +215,7 @@ data/
 !data/.gitignore
 !data/**/*.dvc
 notebooks/
-src/
+!src/data
 
 # add models/
 models/
