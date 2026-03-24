@@ -102,6 +102,6 @@ def build_features_pipeline(train: pd.DataFrame) -> tuple:
     # save to disk
     save_features(user_item_matrix, user_map, item_map)
     
-    logger.info("Feature pipeline completed successfully!.")
+    logger.info("Feature pipeline completed successfully.")
     
     return user_item_matrix, user_map, item_map
