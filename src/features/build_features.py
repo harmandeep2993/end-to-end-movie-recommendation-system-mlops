@@ -18,7 +18,7 @@ from src.utils import get_logger
 # Initialize logger
 logger = get_logger(__name__)
 
-def build_user_item_matrix(train: pd.DataFrame) -> tuple:    
+def build_user_item_matrix(train: pd.DataFrame) -> tuple:
     """
     Build sparse User-Item Matrix from training data.
     
