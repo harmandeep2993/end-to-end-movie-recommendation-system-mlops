@@ -18,7 +18,7 @@ from src.utils import get_logger
 # Initialize logger
 logger = get_logger(__name__)
 
-def build_user_item_matrix(train: pd.DataFrame) -> tuple:    
+def build_user_item_matrix(train: pd.DataFrame) -> tuple:
     """
     Build sparse User-Item Matrix from training data.
     
@@ -54,7 +54,7 @@ def build_user_item_matrix(train: pd.DataFrame) -> tuple:
     return user_item_matrix, user_map, item_map
 
 
-# Note: This function is not called in the main pipeline, but can be used for future feature engineering steps.
+# Note: This function is used by the feature pipeline and can also be reused for future feature engineering steps.
 def save_features(user_item_matrix, user_map: dict, item_map: dict) -> None:
     """
     Save sparse matrix and mappings to disk.
@@ -102,6 +102,6 @@ def build_features_pipeline(train: pd.DataFrame) -> tuple:
     # save to disk
     save_features(user_item_matrix, user_map, item_map)
     
-    logger.info("Feature pipeline completed successfully!.")
+    logger.info("Feature pipeline completed successfully.")
     
     return user_item_matrix, user_map, item_map
