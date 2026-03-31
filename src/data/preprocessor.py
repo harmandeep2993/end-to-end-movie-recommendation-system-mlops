@@ -24,10 +24,11 @@ def _get_missing_values(dataframe: pd.DataFrame) -> tuple:
     Returns:
         tuple: missing value counts and percentages
     """
-    missing_values = dataframe.isnull().sum()
-    missing_percentage = (missing_values / len(dataframe)) * 100
-    logger.info(f"Missing values:\n{missing_values}")
-    return missing_values, missing_percentage
+    missing_values = dataframe.isnull().sum().sum()
+    # missing_percentage = (missing_values / len(dataframe)) * 100
+    logger.info(f"Missing values: {missing_values}")
+    # logger.info(f"Missing percentage:\n{missing_percentage:.2f}%") 
+    return missing_values # missing_percentage
 
 
 # Remove duplicates
@@ -41,7 +42,7 @@ def _remove_duplicates(dataframe: pd.DataFrame) -> pd.DataFrame:
         dataframe with duplicates removed
     """
     duplicates = dataframe.duplicated().sum()
-    logger.info(f"Duplicate rows found: {duplicates}")
+    logger.info(f"Duplicated rows: {duplicates}")
     return dataframe.drop_duplicates()
 
 
@@ -59,9 +60,12 @@ def filter_movies(ratings: pd.DataFrame, min_ratings: int = 10) -> pd.DataFrame:
     movie_counts = ratings.groupby("movie_id")["rating"].count()
     valid_movies = movie_counts[movie_counts >= min_ratings].index
     filtered = ratings[ratings["movie_id"].isin(valid_movies)]
+    movies_removed = ratings["movie_id"].nunique() - filtered["movie_id"].nunique()
 
-    logger.info(f"Movies before filtering: {ratings['movie_id'].nunique()}")
-    logger.info(f"Movies after filtering: {filtered['movie_id'].nunique()}")
+    logger.info(f"Filtering movies with less than {min_ratings} ratings...")
+    logger.info(f"Before filtering: {ratings['movie_id'].nunique()}")
+    logger.info(f"After filtering: {filtered['movie_id'].nunique()}")
+    logger.info(f"Movies removed: {movies_removed}")
 
     return filtered
 
@@ -108,11 +112,13 @@ def preprocess_pipeline(ratings: pd.DataFrame,movies: pd.DataFrame, users: pd.Da
         tuple: train, test, movies, users
     """
     # check missing values for all
+    logger.info("Checking for missing values...")
     _get_missing_values(ratings)
     _get_missing_values(movies)
     _get_missing_values(users)
     
     # remove duplicates from all
+    logger.info("Duplicate rows check and removal...")
     ratings = _remove_duplicates(ratings)
     movies  = _remove_duplicates(movies)
     users   = _remove_duplicates(users)
@@ -121,6 +127,7 @@ def preprocess_pipeline(ratings: pd.DataFrame,movies: pd.DataFrame, users: pd.Da
     ratings = filter_movies(ratings)
     
     # train test split on ratings
+    logger.info("Splitting ratings into train and test sets...")
     train, test = train_test_split_ratings(ratings)
     
     logger.info("Preprocessing pipeline completed!")
