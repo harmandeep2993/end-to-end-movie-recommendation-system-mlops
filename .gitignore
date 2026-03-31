@@ -225,3 +225,9 @@ models/
 #  Ignore MacOS system files
 .DS_Store
 extras
+
+# mlflow
+mlruns/
+mlflow.db
+mlflow-artifacts/
+mlflow-logs/
