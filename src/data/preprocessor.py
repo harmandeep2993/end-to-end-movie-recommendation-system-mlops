@@ -25,10 +25,9 @@ def _get_missing_values(dataframe: pd.DataFrame) -> tuple:
         tuple: missing value counts and percentages
     """
     missing_values = dataframe.isnull().sum().sum()
-    # missing_percentage = (missing_values / len(dataframe)) * 100
-    logger.info(f"Missing values: {missing_values}")
-    # logger.info(f"Missing percentage:\n{missing_percentage:.2f}%") 
-    return missing_values # missing_percentage
+    missing_percentage = (missing_values / len(dataframe)) * 100
+    logger.info(f"Missing values: {missing_values}, Missing percentage: {missing_percentage:.2f}%")
+    return missing_values, missing_percentage
 
 
 # Remove duplicates
