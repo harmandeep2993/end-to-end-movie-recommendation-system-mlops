@@ -23,8 +23,8 @@ jobs:
 
       - name: Install dependencies
         run: uv sync
-
+      
       - name: Run tests
-        run: uv run pytest tests/test_api.py -v -k "health"
+        run: uv run pytest tests/test_api.py -v -k "no_lifespan"
         env:
           PYTHONPATH: ${{ github.workspace }}

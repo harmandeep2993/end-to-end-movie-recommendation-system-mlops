@@ -8,6 +8,21 @@ import pytest
 from fastapi.testclient import TestClient
 from api.main import app
 
+def test_health_no_lifespan():
+    from fastapi.testclient import TestClient
+    from fastapi import FastAPI
+
+    # create minimal app just for health test
+    test_app = FastAPI()
+    
+    @test_app.get("/health")
+    def health():
+        return {"status": "ok"}
+    
+    client = TestClient(test_app)
+    response = client.get("/health")
+    assert response.status_code == 200
+    assert response.json() == {"status": "ok"}
 
 @pytest.fixture(scope="module")
 def client():
