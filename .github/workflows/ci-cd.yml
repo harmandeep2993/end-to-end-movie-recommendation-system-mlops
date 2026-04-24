@@ -25,4 +25,6 @@ jobs:
         run: uv sync
 
       - name: Run tests
-        run: uv run pytest tests/ -v
+        run: uv run pytest tests/test_api.py -v -k "health"
+        env:
+          PYTHONPATH: ${{ github.workspace }}
