@@ -23,8 +23,44 @@ jobs:
 
       - name: Install dependencies
         run: uv sync
-      
+
       - name: Run tests
         run: uv run pytest tests/test_api.py -v -k "no_lifespan"
         env:
           PYTHONPATH: ${{ github.workspace }}
+
+  build-and-deploy:
+    needs: test
+    runs-on: ubuntu-latest
+    if: github.ref == 'refs/heads/main'
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Configure AWS credentials
+        uses: aws-actions/configure-aws-credentials@v4
+        with:
+          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          aws-region: ${{ secrets.AWS_REGION }}
+
+      - name: Login to ECR
+        id: ecr
+        uses: aws-actions/amazon-ecr-login@v2
+
+      - name: Build and push Docker image
+        env:
+          REGISTRY: ${{ steps.ecr.outputs.registry }}
+          REPO: ${{ secrets.ECR_REPO }}
+          TAG: latest
+        run: |
+          docker build -t $REGISTRY/$REPO:$TAG .
+          docker push $REGISTRY/$REPO:$TAG
+
+      - name: Deploy to ECS
+        run: |
+          aws ecs update-service \
+            --cluster movie-rec-cluster \
+            --service movie-rec-service \
+            --force-new-deployment \
+            --region ${{ secrets.AWS_REGION }}
