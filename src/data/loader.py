@@ -24,10 +24,8 @@ HEADER_NAMES = {
 def load_dataset(folder: Path = FILE_PATH) -> Dict[str, pd.DataFrame]:
     """
         Load all .dat files and assign headers based on filename.
-
     Args:
         folder (Path): The folder containing the .dat files.
-
     Returns:
         Dict[str, pd.DataFrame]: A dictionary mapping dataset names to DataFrames.
     """
