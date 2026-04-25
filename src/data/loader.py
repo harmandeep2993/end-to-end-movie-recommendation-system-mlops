@@ -1,5 +1,7 @@
 # src/data/loader.py
 
+"""Data loading module for MovieLens 1M dataset."""
+
 import pandas as pd
 from typing import Dict
 from pathlib import Path
@@ -22,7 +24,7 @@ HEADER_NAMES = {
 def load_dataset(folder: Path = FILE_PATH) -> Dict[str, pd.DataFrame]:
     """
         Load all .dat files and assign headers based on filename.
-    
+
     Args:
         folder (Path): The folder containing the .dat files.
 
