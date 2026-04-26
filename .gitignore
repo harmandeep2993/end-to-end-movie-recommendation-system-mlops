@@ -214,7 +214,6 @@ __pycache__/
 data/
 !data/.gitignore
 !data/**/*.dvc
-notebooks/
 !src/data
 
 # add models/
