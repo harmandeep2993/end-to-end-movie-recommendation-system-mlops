@@ -1,3 +1,4 @@
 {
-    "rmse": 2.5369
+    "rmse": 0.965,
+    "model": "svd_50factors"
 }
