@@ -6,7 +6,7 @@ FastAPI application for movie recommendations system.
 from contextlib import asynccontextmanager
 from fastapi import FastAPI, HTTPException
 
-from api.schemas import RecommendationRequest, RecommendationResponse, MovieRecommendation
+from api.schemas import RecommendationRequest, RecommendationResponse, MovieRecommendation, HistoryResponse
 from api.services import get_recommendations
 from src.data import load_dataset
 from src.utils import get_logger
@@ -22,6 +22,7 @@ async def lifespan(app: FastAPI):
     logger.info("Loading datasets at startup...")
     data = load_dataset()
     datasets["movies"] = data["movies"]
+    datasets["ratings"] = data["ratings"]
     logger.info("Datasets loaded successfully")
     yield
     logger.info("Shutting down API...")
@@ -62,3 +63,33 @@ def recommend(request: RecommendationRequest):
             MovieRecommendation(**r) for r in recommendations
         ]
     )
+
+@app.get("/user/{user_id}/history", response_model=HistoryResponse)
+def get_user_history(user_id: int):
+    
+    movies = datasets.get("movies")
+    ratings = datasets.get("ratings")
+    
+    if movies is None or ratings is None:
+        raise HTTPException(status_code=500, detail="Datasets not loaded")
+    
+    # get user ratings
+    user_ratings = ratings[ratings["user_id"] == user_id]
+    
+    if user_ratings.empty:
+        raise HTTPException(status_code=404, detail=f"User {user_id} not found")
+    
+    # get top rated movies
+    top_rated = user_ratings.sort_values("rating", ascending=False).head(10)
+    
+    history = []
+    for _, row in top_rated.iterrows():
+        title = movies[movies["movie_id"] == row["movie_id"]]["title"].values
+        if len(title) > 0:
+            history.append({
+                "movie_id": int(row["movie_id"]),
+                "title": title[0],
+                "rating": float(row["rating"])
+            })
+    
+    return HistoryResponse(user_id=user_id, history=history)

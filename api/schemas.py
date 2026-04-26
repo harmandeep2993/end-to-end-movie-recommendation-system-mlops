@@ -21,3 +21,12 @@ class RecommendationResponse(BaseModel):
     """Schema for recommendation response."""
     user_id: int
     recommendations: List[MovieRecommendation]
+
+class WatchedMovie(BaseModel):
+    movie_id: int
+    title: str
+    rating: float
+
+class HistoryResponse(BaseModel):
+    user_id: int
+    history: List[WatchedMovie]
