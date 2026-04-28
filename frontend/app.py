@@ -1,5 +1,5 @@
 """
-Streamlit frontend for CinePick - Movie Recommendation System.
+Streamlit frontend for CineMatch - Movie Recommendation System.
 """
 
 import os
@@ -15,7 +15,7 @@ TMDB_BASE_URL = "https://api.themoviedb.org/3"
 TMDB_IMAGE_URL = "https://image.tmdb.org/t/p/w500"
 
 st.set_page_config(
-    page_title="CinePick",
+    page_title="CineMatch",
     page_icon="🍿",
     layout="wide",
     initial_sidebar_state="expanded"
@@ -157,7 +157,7 @@ with st.sidebar:
     st.markdown("""
     <div style='text-align:center;padding:1.5rem 0 1rem;'>
         <p style='font-size:2.5rem;margin:0;'>🍿</p>
-        <p style='font-size:1.6rem;font-weight:700;color:#E50914;margin:0;letter-spacing:-0.5px;'>CinePick</p>
+        <p style='font-size:1.6rem;font-weight:700;color:#E50914;margin:0;letter-spacing:-0.5px;'>CineMatch</p>
         <p style='font-size:0.7rem;color:#555;margin:4px 0 0;'>discover what to watch next</p>
     </div>
     """, unsafe_allow_html=True)
@@ -342,7 +342,7 @@ else:
     st.markdown("""
     <div style='text-align:center;padding:6rem 2rem;'>
         <p style='font-size:4rem;margin:0 0 1rem;'>🍿</p>
-        <p style='font-size:1.8rem;font-weight:700;color:#e0e0e0;margin:0 0 8px;'>Welcome to CinePick</p>
+        <p style='font-size:1.8rem;font-weight:700;color:#e0e0e0;margin:0 0 8px;'>Welcome to CineMatch</p>
         <p style='font-size:0.9rem;color:#555;margin:0 0 2rem;'>Your personal AI-powered movie discovery engine</p>
         <div style='display:inline-flex;gap:2rem;background:#1a1a1a;border:1px solid #2a2a2a;border-radius:12px;padding:1rem 2rem;'>
             <div style='text-align:center;'>

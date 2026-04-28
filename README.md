@@ -1,8 +1,8 @@
-# CinePick 🎬
+# CineMatch 🎬
 
 > Your personal AI-powered movie recommendation engine
 
-CinePick is an end-to-end machine learning system that delivers personalized movie recommendations using SVD collaborative filtering, trained on the MovieLens 1M dataset. Built with MLOps best practices from data versioning and experiment tracking to containerized cloud deployment.
+CineMatch is an end-to-end machine learning system that delivers personalized movie recommendations using SVD collaborative filtering, trained on the MovieLens 1M dataset. Built with MLOps best practices from data versioning and experiment tracking to containerized cloud deployment.
 
 ---
 
@@ -42,7 +42,7 @@ SVD Matrix Factorization (50 latent factors)
       ↓
 FastAPI REST API
       ↓
-CinePick Streamlit UI
+CineMatch Streamlit UI
 ```
 
 ---
@@ -95,7 +95,7 @@ movie-recommendation-mlops-end-to-end/
 │   └── services.py                  → API business logic
 │
 ├── frontend/
-│   └── app.py                       → CinePick Streamlit UI
+│   └── app.py                       → CineMatch Streamlit UI
 │
 ├── tests/
 │   ├── test_data.py                 → data pipeline tests
@@ -266,8 +266,8 @@ UI available at: `http://localhost:8501`
 ### Run with Docker
 
 ```bash
-docker build -t cinepick .
-docker run -p 8000:8000 cinepick
+docker build -t CineMatch .
+docker run -p 8000:8000 CineMatch
 ```
 
 ### View MLflow experiments
